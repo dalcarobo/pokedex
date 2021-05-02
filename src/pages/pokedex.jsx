@@ -33,7 +33,7 @@ query GetPokemonList($offset: Int!) {
 const Pokedex = () => {
 	const [pokemonList, setPokemonList] = useState([]);
 	const [hasMore, setHasMore] = useState(true);
-	const [offset, setOffset] = useState(142);
+	const [offset, setOffset] = useState(0);
 
 	const getPokemonList = async () => {
 		await fetch('https://beta.pokeapi.co/graphql/v1beta', {
