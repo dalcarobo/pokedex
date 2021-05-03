@@ -34,6 +34,7 @@ query GetPokemonList($offset: Int!) {
 const Pokedex = () => {
 	const [pokemonList, setPokemonList] = useState([]);
 	const [hasMore, setHasMore] = useState(true);
+	const [loading, setLoading] = useState(true);
 	const [offset, setOffset] = useState(0);
 
 	const getPokemonList = async () => {
@@ -48,6 +49,7 @@ const Pokedex = () => {
 			.then((result) => result.json())
 			.then(({ data }) => {
 				setPokemonList([...pokemonList, ...data.pokemon_v2_pokemon]);
+				setLoading(false);
 			});
 		setOffset(Number(offset) + 20);
 	};
@@ -76,25 +78,51 @@ const Pokedex = () => {
 				/>
 				<span style={{ fontSize: 12 }}>v1.0.0</span>
 			</div>
-			<InfiniteScroll
-				pageStart={0}
-				hasMore={hasMore}
-				loadMore={getPokemonList}
-				loader={null}
-				initialLoad={false}
-				threshold={300}
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-				}}
-			>
-				<Container>
-					{pokemonList &&
-						pokemonList.map((pokemon, index) => (
-							<Card pokemon={pokemon} key={index} />
+			{!loading && (
+				<InfiniteScroll
+					pageStart={0}
+					hasMore={hasMore}
+					loadMore={getPokemonList}
+					loader={null}
+					initialLoad={false}
+					threshold={300}
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+					}}
+				>
+					<Container>
+						{pokemonList &&
+							pokemonList.map((pokemon, index) => (
+								<Card pokemon={pokemon} key={index} cardID={index} />
+							))}
+					</Container>
+				</InfiniteScroll>
+			)}
+
+			{loading && (
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+					}}
+				>
+					<Container>
+						{[0, 1, 2, 3, 4, 5, 6, 7].map((item) => (
+							<div
+								style={{
+									height: 400,
+									width: 280,
+									background: '#292942',
+									borderRadius: '15px',
+									margin: 20,
+								}}
+								key={item}
+							></div>
 						))}
-				</Container>
-			</InfiniteScroll>
+					</Container>
+				</div>
+			)}
 			<footer>
 				<p>
 					Developed by{' '}

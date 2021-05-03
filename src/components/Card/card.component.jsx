@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Tilt from 'react-parallax-tilt';
 import { CardStyled, StatsBar } from '../../styles/card.styled';
 
-const Card = ({ pokemon: { types, name, id, stats_, specy } }) => {
+const Card = ({ cardID, pokemon: { types, name, id, stats_, specy } }) => {
 	const [expanded, setExpanded] = useState(false);
+	const _el = useRef();
 
 	const pokemonTypes = types.map((type) => {
 		if (type instanceof Array) return type.map((t) => t);
@@ -21,18 +22,16 @@ const Card = ({ pokemon: { types, name, id, stats_, specy } }) => {
 
 	return (
 		<Tilt
-			glareEnable={true}
-			glareMaxOpacity={1}
-			glareColor='#ffffff'
-			glarePosition={'all'}
-			glareBorderRadius='20px'
-			perspective={900}
+			glareEnable={false}
+			key={cardID}
+			perspective={1000}
 			style={{
 				transformStyle: 'preserve-3d',
 				margin: 20,
 			}}
 		>
 			<CardStyled
+				ref={_el}
 				types={pokemonTypes}
 				specy={specy}
 				expanded={expanded}

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import foil from '../assets/foil.gif';
 import shimmer from '../assets/shimmer.gif';
-
 export const CardStyled = styled.div`
 	position: relative;
 	width: 280px;
@@ -42,7 +41,7 @@ export const CardStyled = styled.div`
 		}
 	}};
 
-	&:after {
+	&::after {
 		${(props) => {
 			if (
 				props.specy.is_baby === true ||
@@ -51,21 +50,22 @@ export const CardStyled = styled.div`
 			) {
 				return `
           position: absolute;
-        content: '';
-        opacity: 0.2;
-        border-radius: 15px;
-        top: 0;
-        left: 0;
-        width: 275px;
-        height: 395px;
-        background: url('${shimmer}');
-        background-size: cover;
-        box-sizing: border-box;`;
+          content: '';
+          opacity: 0.2;
+          border-radius: 15px;
+          top: 0;
+          left: 0;
+          width: 275px;
+          height: 395px;
+          
+          background: url('${shimmer}');
+          background-size: cover;
+          box-sizing: border-box;`;
 			}
 		}}
 	}
 
-	&:before {
+	&::before {
 		${(props) => {
 			if (
 				props.specy.is_baby === true ||
@@ -73,16 +73,16 @@ export const CardStyled = styled.div`
 				props.specy.is_mythical === true
 			) {
 				return `
-		content: '';
-		opacity: 0.1;
-		border-radius: 15px;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 275px;
-		height: 395px;
-		background: url('${foil}');
-		box-sizing: border-box;`;
+          content: '';
+          opacity: 0.1;
+          border-radius: 15px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 275px;
+          height: 395px;
+          background: url('${foil}');
+          box-sizing: border-box;`;
 			}
 		}}
 	}
@@ -99,6 +99,7 @@ export const CardStyled = styled.div`
 		text-align: center;
 		position: absolute;
 		transform: rotateY(180deg);
+		transform-style: preserve-3d;
 		display: ${(props) => (props.expanded ? 'block' : 'none')};
 		transition: all 1s ease;
 	}
@@ -108,7 +109,7 @@ export const CardStyled = styled.div`
 		top: -140px;
 		right: 5px;
 		font-size: 8em;
-		color: rgba(255, 255, 255, 0.09);
+		color: rgba(255, 255, 255, 0.2);
 		pointer-events: none;
 	}
 
@@ -152,6 +153,8 @@ export const StatsBar = styled.div`
 	height: 25px;
 	width: 255px;
 	margin-top: 20px;
+	transform-style: preserve-3d;
+	transform: translateZ(13px);
 	text-align: left;
 	border-radius: 4px;
 	background: ${(props) => {
@@ -163,5 +166,6 @@ export const StatsBar = styled.div`
 
 	h4 {
 		padding: 2px 0 0 8px;
+		transform: translateZ(20px);
 	}
 `;
