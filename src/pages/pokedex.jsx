@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import pokedexLogo from '../assets/logo.png';
 import Card from '../components/Card/card.component';
 import { Container } from '../styles/container.styled';
 
 const getPokemonListQuery = `
 query GetPokemonList($offset: Int!) {
-  pokemon_v2_pokemon(limit: 21, offset: $offset, where: {is_default: {_eq: true}}) {
+  pokemon_v2_pokemon(limit: 20, offset: $offset, where: {is_default: {_eq: true}}) {
     name
     id: pokemon_species_id
     is_default
@@ -48,7 +49,7 @@ const Pokedex = () => {
 			.then(({ data }) => {
 				setPokemonList([...pokemonList, ...data.pokemon_v2_pokemon]);
 			});
-		setOffset(Number(offset) + 21);
+		setOffset(Number(offset) + 20);
 	};
 
 	useEffect(() => {
@@ -56,21 +57,53 @@ const Pokedex = () => {
 	}, []);
 
 	return (
-		<InfiniteScroll
-			pageStart={0}
-			hasMore={hasMore}
-			loadMore={getPokemonList}
-			loader={null}
-			initialLoad={false}
-			threshold={100}
-		>
-			<Container>
-				{pokemonList &&
-					pokemonList.map((pokemon, index) => (
-						<Card pokemon={pokemon} key={index} />
-					))}
-			</Container>
-		</InfiniteScroll>
+		<>
+			<div
+				style={{
+					display: 'flex',
+					color: 'white',
+					alignItems: 'baseline',
+					width: '99vw',
+					justifyContent: 'center',
+				}}
+			>
+				<img
+					src={pokedexLogo}
+					style={{
+						width: 290,
+						marginTop: 20,
+					}}
+				/>
+				<span style={{ fontSize: 12 }}>v1.0.0</span>
+			</div>
+			<InfiniteScroll
+				pageStart={0}
+				hasMore={hasMore}
+				loadMore={getPokemonList}
+				loader={null}
+				initialLoad={false}
+				threshold={300}
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+				}}
+			>
+				<Container>
+					{pokemonList &&
+						pokemonList.map((pokemon, index) => (
+							<Card pokemon={pokemon} key={index} />
+						))}
+				</Container>
+			</InfiniteScroll>
+			<footer>
+				<p>
+					Developed by{' '}
+					<a href='https://github.com/dalcarobo' target='_blank'>
+						Gabriel Dal Carobo
+					</a>
+				</p>
+			</footer>
+		</>
 	);
 };
 

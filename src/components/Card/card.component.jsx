@@ -22,8 +22,9 @@ const Card = ({ pokemon: { types, name, id, stats_, specy } }) => {
 	return (
 		<Tilt
 			glareEnable={true}
-			glareMaxOpacity={0.8}
+			glareMaxOpacity={1}
 			glareColor='#ffffff'
+			glarePosition={'all'}
 			glareBorderRadius='20px'
 			perspective={900}
 			style={{

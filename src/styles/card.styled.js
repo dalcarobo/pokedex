@@ -1,13 +1,15 @@
 import styled from 'styled-components';
+import foil from '../assets/foil.gif';
+import shimmer from '../assets/shimmer.gif';
 
 export const CardStyled = styled.div`
 	position: relative;
-
 	width: 280px;
 	height: 400px;
 	margin: 0;
 	box-shadow: 20px 20px 50px rgb(0, 0, 0, 0.5);
 	border-radius: 15px;
+
 	background: ${(props) => {
 		return `linear-gradient(to bottom right, var(--color-${
 			props.types[0].type.name
@@ -15,6 +17,7 @@ export const CardStyled = styled.div`
 			props.types[1]?.type?.name ?? props.types[0].type.name
 		}) 50%)`;
 	}};
+	background-blend-mode: normal;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -38,6 +41,51 @@ export const CardStyled = styled.div`
 			return '5px solid #A6A6A6';
 		}
 	}};
+
+	&:after {
+		${(props) => {
+			if (
+				props.specy.is_baby === true ||
+				props.specy.is_legendary === true ||
+				props.specy.is_mythical === true
+			) {
+				return `
+          position: absolute;
+        content: '';
+        opacity: 0.2;
+        border-radius: 15px;
+        top: 0;
+        left: 0;
+        width: 275px;
+        height: 395px;
+        background: url('${shimmer}');
+        background-size: cover;
+        box-sizing: border-box;`;
+			}
+		}}
+	}
+
+	&:before {
+		${(props) => {
+			if (
+				props.specy.is_baby === true ||
+				props.specy.is_legendary === true ||
+				props.specy.is_mythical === true
+			) {
+				return `
+		content: '';
+		opacity: 0.1;
+		border-radius: 15px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 275px;
+		height: 395px;
+		background: url('${foil}');
+		box-sizing: border-box;`;
+			}
+		}}
+	}
 
 	.content {
 		padding: 20px;
